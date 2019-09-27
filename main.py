@@ -30,14 +30,17 @@ def profile(user_id):
 
 
 @app.route('/cart/<int:user_id>', methods=['GET'])
-def cart():
+def cart(user_id):
     return sql_manager.get_user_cart(user_id)
 
 
 @app.route('/product/<int:product_id>', methods=['GET'])
 @cross_origin()
 def product(product_id):
-    return sql_manager.get_product(product_id)
+    
+    response = jsonify({'product': sql_manager.get_product(product_id)})
+    response.status_code = 200
+    return response
 
 
 @app.route('/manage_cart/<int:user_id>/<int:product_id>/<int:method>', methods=['GET'])

@@ -54,7 +54,7 @@ cursor.executemany(query, params)
 connection.commit()
 
 cart = [1, 11, 21, 45, 12, 90, 32, 89]
-insert_user = '''INSERT INTO users VALUES (?,?,?,?,?,?,?,?,?)'''
+insert_user = '''INSERT INTO users VALUES (?,?,?,?,?,?,?,?,?, ?)'''
 params = [0, 'https://images-na.ssl-images-amazon.com/images/I/8166xCVDGnL._SY355_.jpg', 100, 0, 'Russia', 'Perm', 'Bolshevikov', '89', '1', adapt_array(cart)]
 
 cursor.executemany(insert_user, [params])

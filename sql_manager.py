@@ -1,6 +1,7 @@
 import json
 import io
 import sqlite3
+import numpy as np
 from collections import defaultdict
 
 from flask import jsonify
@@ -101,17 +102,20 @@ class SQL_Manager:
             for i in range(len(fields)):
                 output[fields[i]] = data[i]
 
-        response = jsonify({'product': output})
-        response.status_code = 200
-
-        return response
+        return output
 
     def get_user_cart(self, user_id):
         get_query = f'''SELECT cart FROM users
-                       WHERE user_id={user_id})'''
+                       WHERE id={user_id}'''
         data = self.cursor.execute(get_query).fetchone()
 
         if data:
             output = []
             data = self.convert_array(data[0])
+            print(data)
+            for product in data:
+                output.append(self.get_product(product))
+        response = jsonify({'items': output})
+        response.status_code = 200
 
+        return response
