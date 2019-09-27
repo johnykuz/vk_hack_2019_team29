@@ -31,7 +31,7 @@ def profile(user_id):
 
 @app.route('/cart/<int:user_id>', methods=['GET'])
 def cart():
-    pass
+    return sql_manager.get_user_cart(user_id)
 
 
 @app.route('/product/<int:product_id>', methods=['GET'])

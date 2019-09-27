@@ -1,4 +1,5 @@
 import json
+import io
 import sqlite3
 from collections import defaultdict
 
@@ -37,6 +38,16 @@ class SQL_Manager:
         self.cursor.execute(products_create_query)
         self.cursor.execute(users_create_query)
 
+    def adapt_array(self, arr):
+        out = io.BytesIO()
+        np.save(out, arr)
+        out.seek(0)
+        return sqlite3.Binary(out.read())
+
+    def convert_array(self, text):
+        out = io.BytesIO(text)
+        out.seek(0)
+        return np.load(out)
 
     def get_category(self, category_id, user_id):
         get_query = f'''SELECT * FROM products
@@ -84,7 +95,7 @@ class SQL_Manager:
                        WHERE id={product_id}'''
         data = self.cursor.execute(get_query).fetchone()
 
-        fields = ['id', 'photo_url', 'category', 'name', 'description', 'price']
+        fields = ['id', 'photo_url', 'name', 'description', 'price']
         output = {}
         if data:
             for i in range(len(fields)):
@@ -94,3 +105,13 @@ class SQL_Manager:
         response.status_code = 200
 
         return response
+
+    def get_user_cart(self, user_id):
+        get_query = f'''SELECT cart FROM users
+                       WHERE user_id={user_id})'''
+        data = self.cursor.execute(get_query).fetchone()
+
+        if data:
+            output = []
+            data = self.convert_array(data[0])
+

@@ -1,8 +1,19 @@
 import sqlite3
+import io
+import numpy as np
 
 
 connection = sqlite3.connect('marketplace.db', check_same_thread=False)
 cursor = connection.cursor()
+
+
+
+def adapt_array(arr):
+    out = io.BytesIO()
+    np.save(out, arr)
+    out.seek(0)
+    return sqlite3.Binary(out.read())
+
 
 
 products_create_query = '''CREATE TABLE IF NOT EXISTS products
@@ -23,7 +34,8 @@ users_create_query = '''CREATE TABLE IF NOT EXISTS users
                          city TEXT,
                          street TEXT,
                          building TEXT,
-                         flat TEXT
+                         flat TEXT,
+                         cart BLOB
                          )'''
 
 cursor.execute(products_create_query)
@@ -41,8 +53,9 @@ for i in range(100):
 cursor.executemany(query, params)
 connection.commit()
 
+cart = [1, 11, 21, 45, 12, 90, 32, 89]
 insert_user = '''INSERT INTO users VALUES (?,?,?,?,?,?,?,?,?)'''
-params = [0, 'https://images-na.ssl-images-amazon.com/images/I/8166xCVDGnL._SY355_.jpg', 100, 0, 'Russia', 'Perm', 'Bolshevikov', '89', '1']
+params = [0, 'https://images-na.ssl-images-amazon.com/images/I/8166xCVDGnL._SY355_.jpg', 100, 0, 'Russia', 'Perm', 'Bolshevikov', '89', '1', adapt_array(cart)]
 
 cursor.executemany(insert_user, [params])
 connection.commit()
