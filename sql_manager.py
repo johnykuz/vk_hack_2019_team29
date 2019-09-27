@@ -2,7 +2,6 @@ import json
 import sqlite3
 from collections import defaultdict
 
-import numpy as np
 from flask import jsonify
 
 
@@ -17,6 +16,7 @@ class SQL_Manager:
         products_create_query = '''CREATE TABLE IF NOT EXISTS products
                           (id INTEGER,
                            photo_url INTEGER,
+                           category INTEGER,
                            description TEXT,
                            price INTEGER)'''
 
@@ -32,15 +32,17 @@ class SQL_Manager:
     def category(self, category_id, user_id):
     	get_query = f'''SELECT * FROM products
     				    WHERE category={category_id} AND 
-    				   		 _ROWID_ >= (abs(random()) % (SELECT max(_ROWID_) FROM bar))
+    				   		 _ROWID_ >= (abs(random()) % (SELECT max(_ROWID_) FROM products))
     				   	LIMIT 20'''
 
     	data = self.cursor.execute(get_query).fetchall()
 
     	output = []
     	for product in data:
-    		print(product)
+    		temp = {'id': product[0], 'photo_url': product[1],
+    			    'description': product[3], 'price': product[4]}
+    		output.append(temp)
 
-    	response = jsonify(output)
+    	response = jsonify({'items': output})
     	response.status_code = 200
     	return response

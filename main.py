@@ -2,7 +2,7 @@ from flask import Flask, json, request, jsonify
 from sql_manager import SQL_Manager
 
 app = Flask(__name__)
-manager = SQL_Manager()
+sql_manager = SQL_Manager()
 
 
 @app.route('/')
@@ -30,13 +30,13 @@ def product():
 	pass
 
 
-@app.route('manage_cart/<int:user_id>/<int:product_id>/<int:method>', methods=['GET'])
+@app.route('/manage_cart/<int:user_id>/<int:product_id>/<int:method>', methods=['GET'])
 def manage_cart():
 	pass
 
 
-@app.route('manage_favourite/<int:user_id>/<int:product_id>/<int:method>', methods=['GET'])
-def manage_cart():
+@app.route('/manage_favourite/<int:user_id>/<int:product_id>/<int:method>', methods=['GET'])
+def manage_favourite():
 	pass
 
 
