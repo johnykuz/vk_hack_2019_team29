@@ -16,10 +16,10 @@ class SQL_Manager:
         products_create_query = '''CREATE TABLE IF NOT EXISTS products
                           (id INTEGER,
                            photo_url INTEGER,
-                           category INTEGER,
                            name TEXT,
                            description TEXT,
-                           price INTEGER)'''
+                           price INTEGER,
+                           category INTEGER)'''
 
 
         users_create_query = '''CREATE TABLE IF NOT EXISTS users
@@ -39,34 +39,58 @@ class SQL_Manager:
 
 
     def get_category(self, category_id, user_id):
-    	get_query = f'''SELECT * FROM products
-    				    WHERE category={category_id} AND 
-    				   		 _ROWID_ >= (abs(random()) % (SELECT max(_ROWID_) FROM products))
-    				   	LIMIT 20'''
+        get_query = f'''SELECT * FROM products
+                        WHERE category={category_id} AND 
+                             _ROWID_ >= (abs(random()) % (SELECT max(_ROWID_) FROM products))
+                        LIMIT 20'''
 
-    	data = self.cursor.execute(get_query).fetchall()
+        data = self.cursor.execute(get_query).fetchall()
 
-    	output = []
-    	for product in data:
-    		temp = {'id': product[0], 'photo_url': product[1], 'name': product[3],
-    			    'description': product[4], 'price': product[5]}
-    		output.append(temp)
+        fields = ['id', 'photo_url', 'name', 'description', 'price']
+        output = []
+        if data:
+            for product in data:
+                temp = {}
 
-    	response = jsonify({'items': output})
-    	response.status_code = 200
-    	return response
+                for i in range(len(fields)):
+                    temp[fields[i]] = data[i]
+
+                output.append(temp)
+
+        response = jsonify({'items': output})
+        response.status_code = 200
+        return response
 
 
     def get_profile(self, user_id):
-    	get_query = f'''SELECT * FROM users
-    				   WHERE id = {user_id}'''
-    	data = self.cursor.execute(get_query).fetchone()
+        get_query = f'''SELECT * FROM users
+                       WHERE id = {user_id}'''
+        data = self.cursor.execute(get_query).fetchone()
 
-    	fields = ['picture_url', 'cash_back', 'user_of_psb', 'country', 'city', 'street', 'building', 'flat']
-    	output = {}
-    	for i in range(len(data)):
-    		output[field] = data[i+1]
+        fields = ['picture_url', 'cash_back', 'user_of_psb', 'country', 'city', 'street', 'building', 'flat']
+        output = {}
+        if data:
+            print(data)
+            for i in range(len(fields)):
+                output[fields[i]] = data[i+1]
 
-    	response = jsonify({'user': output})
-    	response.status_code = 200
-    	return response
+        response = jsonify({'user': output})
+        response.status_code = 200
+        return response
+
+
+    def get_product(self, product_id):
+        get_query = f'''SELECT * FROM products
+                       WHERE id={product_id}'''
+        data = self.cursor.execute(get_query).fetchone()
+
+        fields = ['id', 'photo_url', 'category', 'name', 'description', 'price']
+        output = {}
+        if data:
+            for i in range(len(fields)):
+                output[fields[i]] = data[i]
+
+        response = jsonify({'product': output})
+        response.status_code = 200
+
+        return response

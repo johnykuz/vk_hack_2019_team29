@@ -40,3 +40,9 @@ for i in range(100):
 
 cursor.executemany(query, params)
 connection.commit()
+
+insert_user = '''INSERT INTO users VALUES (?,?,?,?,?,?,?,?,?)'''
+params = [0, 'https://images-na.ssl-images-amazon.com/images/I/8166xCVDGnL._SY355_.jpg', 100, 0, 'Russia', 'Perm', 'Bolshevikov', '89', '1']
+
+cursor.executemany(insert_user, [params])
+connection.commit()
