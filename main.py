@@ -1,23 +1,33 @@
 from flask import Flask, json, request, jsonify
 from sql_manager import SQL_Manager
+from flask_cors import CORS, cross_origin
+
+
 
 app = Flask(__name__)
 sql_manager = SQL_Manager()
 
 
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
+
+
 @app.route('/')
+@cross_origin()
 def main():
     return 'OK'
 
 
 @app.route('/category/<int:user_id>/<int:category_id>', methods=['GET'])
+@cross_origin()
 def category(user_id, category_id):
-	return sql_manager.category(category_id, user_id)
+	return sql_manager.get_category(category_id, user_id)
 
 
 @app.route('/profile/<int:user_id>', methods=['GET'])
+@cross_origin()
 def profile():
-	pass
+	return sql_manager.get_profile(user_id)
 
 
 @app.route('/cart/<int:user_id>', methods=['GET'])

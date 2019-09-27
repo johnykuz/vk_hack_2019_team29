@@ -17,6 +17,6 @@ output = []
 for product in data:
 	print(product)
 
-response = jsonify(output)
-response.status_code = 200
-return response
+# response = jsonify(output)
+# response.status_code = 200
+# return response
