@@ -53,7 +53,7 @@ class SQL_Manager:
                 temp = {}
 
                 for i in range(len(fields)):
-                    temp[fields[i]] = data[i]
+                    temp[fields[i]] = product[i]
 
                 output.append(temp)
 
