@@ -42,7 +42,7 @@ cursor.execute(products_create_query)
 cursor.execute(users_create_query)
 
 
-link = 'https://c.dns-shop.ru/thumb/st1/fit_width/120/120/b31b95e5e3e5bea851387ee4b03f4618/acaac7f3e882bd9ef05986ffa238428d9b0eaeb45879fe557178c60f14be23cf.jpg.webp'
+link = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT2XPE7EHN5jHcPueDwZBG0vTIhSDcOoyxCPP7z_7qY-0CeWBg1'
 name = '[RedVerg RD5461C-120A, RedVerg RD5461C-130A, RedVerg RD5461C-150A, RedVerg RD5461C-160B, пластик, 1 шт]'
 query = '''INSERT INTO products VALUES (?, ?, ?, ?, ?, ?)'''
 params = []
