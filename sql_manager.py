@@ -33,7 +33,8 @@ class SQL_Manager:
                                city TEXT,
                                street TEXT,
                                building TEXT,
-                               flat TEXT
+                               flat TEXT,
+                               cart BLOB
                                )'''
 
         self.cursor.execute(products_create_query)
