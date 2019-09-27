@@ -8,10 +8,10 @@ cursor = connection.cursor()
 products_create_query = '''CREATE TABLE IF NOT EXISTS products
                   (id INTEGER,
                    photo_url INTEGER,
-                   category INTEGER,
                    name TEXT,
                    description TEXT,
-                   price INTEGER)'''
+                   price INTEGER,
+                   category INTEGER)'''
 
 
 users_create_query = '''CREATE TABLE IF NOT EXISTS users
@@ -36,7 +36,7 @@ query = '''INSERT INTO products VALUES (?, ?, ?, ?, ?, ?)'''
 params = []
 
 for i in range(100):
-  params.append([i, link, 0, name, 'description_string', 160+i*10])
+  params.append([i, link, name, 'description_string', 160+i*10, 0])
 
 cursor.executemany(query, params)
 connection.commit()

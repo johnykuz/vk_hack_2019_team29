@@ -72,7 +72,7 @@ class SQL_Manager:
         if data:
             print(data)
             for i in range(len(fields)):
-                output[fields[i]] = data[i+1]
+                output[fields[i]] = data[i]
 
         response = jsonify({'user': output})
         response.status_code = 200
