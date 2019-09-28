@@ -83,7 +83,6 @@ class SQL_Manager:
         fields = ['picture_url', 'cash_back', 'user_of_psb']
         output = {}
         if data:
-            print(data)
             for i in range(len(fields)):
                 output[fields[i]] = data[i+1]
 
@@ -95,26 +94,23 @@ class SQL_Manager:
         get_query = f'''SELECT * FROM products
                        WHERE id={product_id}'''
         data = self.cursor.execute(get_query).fetchone()
-
         fields = ['id', 'photo_url', 'name', 'description', 'price']
         output = {}
         if data:
             for i in range(len(fields)):
                 output[fields[i]] = data[i]
-
         return output
 
     def get_user_favourite(self, user_id):
         get_query = f'''SELECT favourite FROM users
                        WHERE id = {user_id}'''
         data = self.cursor.execute(get_query).fetchone()
-
         if data:
             output = []
             data = self.convert_array(data[0])
 
             for product in data:
-                output.append(self.get_product(product))
+                output.append(self.get_product(int(product)))
         response = jsonify({'items': output})
         response.status_code = 200
 
@@ -126,9 +122,7 @@ class SQL_Manager:
         data = self.cursor.execute(get_query).fetchone()
 
         if data:
-            print(self.convert_array(data[0]))
             data = list(self.convert_array(data[0]))
-            print(product_id, data)
             if method == 0:
                 if product_id in data:
                     data.remove(product_id)

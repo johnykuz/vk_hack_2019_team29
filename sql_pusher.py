@@ -52,6 +52,7 @@ params = []
 data = pd.read_csv('products_final.csv')
 for row in data.iterrows():
   print(row[1])
+  idx += 1
   params.append([idx, row[1][3],  row[1][1], row[1][2], row[1][4], row[1][5]])
 
 cursor.executemany(query, params)
