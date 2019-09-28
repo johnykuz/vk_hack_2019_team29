@@ -54,7 +54,7 @@ class SQL_Manager:
 
     def get_category(self, user_id, category_id):
         if category_id > 6 or category_id < 1:
-            category_id = 0
+            category_id = 4
             # category_id = classify user
 
         get_query = f'''SELECT * FROM products
