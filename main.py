@@ -19,7 +19,7 @@ def main():
 @app.route('/category/<int:user_id>/<int:category_id>', methods=['GET'])
 @cross_origin()
 def category(user_id, category_id):
-    return sql_manager.get_category(use r_id, category_id)
+    return sql_manager.get_category(user_id, category_id)
 
 
 @app.route('/profile/<int:user_id>', methods=['GET'])
