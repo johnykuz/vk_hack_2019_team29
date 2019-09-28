@@ -124,8 +124,8 @@ class SQL_Manager:
             response.status_code = 200
 
             return response
-        response = jsonify('error')
-        response.status_code = 400
+        response = jsonify('items': [])
+        response.status_code = 200
         return response
 
     def manage_favourite(self, user_id, product_id, method):
