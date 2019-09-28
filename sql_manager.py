@@ -53,7 +53,6 @@ class SQL_Manager:
         return np.load(out)
 
     def get_category(self, user_id, category_id):
-        category_id = 3
         if category_id > 6 or category_id < 1:
             category_id = 0
             # category_id = classify user
