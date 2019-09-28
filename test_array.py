@@ -1,6 +1,4 @@
-import pandas as pd
+from model import Model
+m = Model()
 
-data = pd.read_csv('products_final.csv')
-for row in data.iterrows():
-    print(row)
-    break
+print(m.classify(291983623))

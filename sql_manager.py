@@ -5,7 +5,7 @@ import numpy as np
 from collections import defaultdict
 
 from flask import jsonify
-
+from model import Model
 
 class SQL_Manager:
 
@@ -13,7 +13,7 @@ class SQL_Manager:
         self.connection = sqlite3.connect('marketplace.db',
                                           check_same_thread=False)
         self.cursor = self.connection.cursor()
-
+        self.model = Model() 
 
         sqlite3.register_adapter(np.ndarray, self.adapt_array)
         sqlite3.register_converter("array", self.convert_array)
@@ -54,8 +54,7 @@ class SQL_Manager:
 
     def get_category(self, user_id, category_id):
         if category_id > 6 or category_id < 1:
-            category_id = 4
-            # category_id = classify user
+            category_id = self.model.classify(user_id, 5)
 
         get_query = f'''SELECT * FROM products
                         WHERE category={category_id}
