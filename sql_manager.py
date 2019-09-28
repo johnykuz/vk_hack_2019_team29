@@ -15,6 +15,9 @@ class SQL_Manager:
         self.cursor = self.connection.cursor()
 
 
+        sqlite3.register_adapter(np.ndarray, self.adapt_array)
+        sqlite3.register_converter("array", self.convert_array)
+
         products_create_query = '''CREATE TABLE IF NOT EXISTS products
                           (id INTEGER,
                            photo_url INTEGER,
@@ -34,7 +37,7 @@ class SQL_Manager:
                                street TEXT,
                                building TEXT,
                                flat TEXT,
-                               cart BLOB
+                               favourite array
                                )'''
 
         self.cursor.execute(products_create_query)
@@ -51,10 +54,10 @@ class SQL_Manager:
         out.seek(0)
         return np.load(out)
 
-    def get_category(self, category_id, user_id):
+    def get_category(self, user_id, category_id):
         get_query = f'''SELECT * FROM products
-                        WHERE category={category_id} AND 
-                             _ROWID_ >= (abs(random()) % (SELECT max(_ROWID_) FROM products))
+                        WHERE category={category_id}
+                        ORDER BY RANDOM()
                         LIMIT 20'''
 
         data = self.cursor.execute(get_query).fetchall()
@@ -74,7 +77,6 @@ class SQL_Manager:
         response.status_code = 200
         return response
 
-
     def get_profile(self, user_id):
         get_query = f'''SELECT * FROM users
                        WHERE id = {user_id}'''
@@ -85,12 +87,11 @@ class SQL_Manager:
         if data:
             print(data)
             for i in range(len(fields)):
-                output[fields[i]] = data[i]
+                output[fields[i]] = data[i+1]
 
         response = jsonify({'user': output})
         response.status_code = 200
         return response
-
 
     def get_product(self, product_id):
         get_query = f'''SELECT * FROM products
@@ -105,18 +106,41 @@ class SQL_Manager:
 
         return output
 
-    def get_user_cart(self, user_id):
-        get_query = f'''SELECT cart FROM users
-                       WHERE id={user_id}'''
+    def get_user_favourite(self, user_id):
+        get_query = f'''SELECT favourite FROM users
+                       WHERE id = {user_id}'''
         data = self.cursor.execute(get_query).fetchone()
 
         if data:
             output = []
             data = self.convert_array(data[0])
-            print(data)
+
             for product in data:
                 output.append(self.get_product(product))
         response = jsonify({'items': output})
         response.status_code = 200
 
         return response
+
+    def manage_favourite(self, user_id, product_id, method):
+        get_query = f'''SELECT favourite FROM users
+                        WHERE id = {user_id}'''
+        data = self.cursor.execute(get_query).fetchone()
+
+        if data:
+            print(self.convert_array(data[0]))
+            data = list(self.convert_array(data[0]))
+            print(product_id, data)
+            if method == 0:
+                if product_id in data:
+                    data.remove(product_id)
+            else:
+                if product_id not in data:
+                    data.append(product_id)
+            data = np.array(data)
+
+
+            insert_query = f'''UPDATE users SET favourite=? WHERE id=?'''
+
+            self.cursor.executemany(insert_query, [[data, user_id]])
+            self.connection.commit()
