@@ -38,7 +38,7 @@ class SQL_Manager:
         self.cursor.execute(products_create_query)
         self.cursor.execute(users_create_query)
 
-        self.connection.enable_load_extension(True)
+        # self.connection.enable_load_extension(True)
         self.connection.load_extension("./libsqliteicu.so")
 
     def adapt_array(self, arr):
