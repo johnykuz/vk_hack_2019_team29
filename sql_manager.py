@@ -98,15 +98,27 @@ class SQL_Manager:
         response.status_code = 200
         return response
 
-    def get_product(self, product_id):
+    def get_product(self, user_id, product_id):
         get_query = f'''SELECT * FROM products
                        WHERE id={product_id}'''
         data = self.cursor.execute(get_query).fetchone()
+
+
         fields = ['id', 'photo_url', 'name', 'description', 'price']
         output = {}
         if data:
             for i in range(len(fields)):
                 output[fields[i]] = data[i]
+
+        users_fav_query = f'''SELECT favourite FROM users
+                                    WHERE id={user_id}'''
+        user_fav_data = self.cursor.execute(users_fav_query).fetchone()
+
+        if user_fav_data:
+            user_fav_data = list(self.convert_array(user_fav_data[0]))
+            output['is_favourite'] = 1 if product_id in user_fav_data else 0
+        else:
+            output['is_favourite'] = 0
         return output
 
     def get_user_favourite(self, user_id):

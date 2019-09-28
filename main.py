@@ -28,10 +28,10 @@ def profile(user_id):
     return sql_manager.get_profile(user_id)
 
 
-@app.route('/product/<int:product_id>', methods=['GET'])
+@app.route('/product/<int:user_id>/<int:product_id>', methods=['GET'])
 @cross_origin()
-def product(product_id):
-    response = jsonify({'product': sql_manager.get_product(product_id)})
+def product(user_id, product_id):
+    response = jsonify({'product': sql_manager.get_product(user_id, product_id)})
     response.status_code = 200
     return response
 
