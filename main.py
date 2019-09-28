@@ -51,8 +51,11 @@ def favourite(user_id):
 
 @app.route('/search/<int:user_id>', methods=['POST'])
 @cross_origin()
-def search():
-    pass
+def search(user_id):
+    data = json.loads(request.data)
+    query = data['data']
+    
+    return sql_manager.search(query)
 
 
 

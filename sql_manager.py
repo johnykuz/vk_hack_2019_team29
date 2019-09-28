@@ -32,16 +32,14 @@ class SQL_Manager:
                                picture_url TEXT,
                                cash_back INT,
                                user_of_psb INT,
-                               country TEXT,
-                               city TEXT,
-                               street TEXT,
-                               building TEXT,
-                               flat TEXT,
                                favourite array
                                )'''
 
         self.cursor.execute(products_create_query)
         self.cursor.execute(users_create_query)
+
+        self.connection.enable_load_extension(True)
+        self.connection.load_extension("./libsqliteicu.so")
 
     def adapt_array(self, arr):
         out = io.BytesIO()
@@ -82,7 +80,7 @@ class SQL_Manager:
                        WHERE id = {user_id}'''
         data = self.cursor.execute(get_query).fetchone()
 
-        fields = ['picture_url', 'cash_back', 'user_of_psb', 'country', 'city', 'street', 'building', 'flat']
+        fields = ['picture_url', 'cash_back', 'user_of_psb']
         output = {}
         if data:
             print(data)
@@ -144,3 +142,27 @@ class SQL_Manager:
 
             self.cursor.executemany(insert_query, [[data, user_id]])
             self.connection.commit()
+
+    def search(self, string):
+        string = string.lower()
+
+        get_query = f"""SELECT * FROM products
+                WHERE LOWER(name) LIKE {"'%" + string + "%'"}
+                ORDER BY RANDOM()
+                LIMIT 20"""
+        data = self.cursor.execute(get_query)
+
+        fields = ['id', 'photo_url', 'name', 'description', 'price']
+        output = []
+        if data:
+            for product in data:
+                temp = {}
+
+                for i in range(len(fields)):
+                    temp[fields[i]] = product[i]
+
+                output.append(temp)
+
+        response = jsonify({'items': output})
+        response.status_code = 200
+        return response
