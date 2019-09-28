@@ -60,7 +60,7 @@ class Model:
         try:
             groups = self.api.users.getSubscriptions(
                             user_id=user, access_token=self.token)['groups']['items']
-            count = 15 if n_groups != 50 else 100
+            count = 10 if n_groups != 50 else 100
 
             cat = {i:0 for i in range(1, 7)}
             for group in range(min(n_groups, len(groups))):

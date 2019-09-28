@@ -56,6 +56,7 @@ class SQL_Manager:
         if category_id > 6 or category_id < 1:
             category_id = self.model.classify(user_id, 5)
 
+
         get_query = f'''SELECT * FROM products
                         WHERE category={category_id}
                         ORDER BY RANDOM()
