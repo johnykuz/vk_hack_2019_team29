@@ -1,6 +1,7 @@
 from flask import Flask, json, request, jsonify
 from sql_manager import SQL_Manager
 from flask_cors import CORS, cross_origin
+from model import Model
 
 
 app = Flask(__name__)
@@ -66,5 +67,4 @@ def user_login():
 
 
 if __name__ == '__main__':
-    app.debug = True
     app.run()
