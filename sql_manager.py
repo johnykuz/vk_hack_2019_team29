@@ -53,8 +53,9 @@ class SQL_Manager:
         return np.load(out)
 
     def get_category(self, user_id, category_id):
-        if category_id == 999:
-            category_id = 0
+        category_id = 3
+        # if category_id == 999:
+        #     category_id = 0
             # category_id = classify user
 
         get_query = f'''SELECT * FROM products
