@@ -131,7 +131,7 @@ class SQL_Manager:
             data = self.convert_array(data[0])
 
             for product in data:
-                output.append(self.get_product(int(product)))
+                output.append(self.get_product(int(user_id, product)))
             response = jsonify({'items': output})
             response.status_code = 200
 
