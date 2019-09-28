@@ -60,6 +60,7 @@ def search(user_id):
 def user_login():
     data = json.loads(request.data)
     user_id = data['id']
+    print(data)
 
     return sql_manager.get_category(user_id, 999)
 
