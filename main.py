@@ -58,6 +58,7 @@ def search(user_id):
     return sql_manager.search(query)
 
 @app.route('/user/data', methods=['POST'])
+@cross_origin()
 def user_login():
     data = json.loads(request.data)
     user_id = data['id']

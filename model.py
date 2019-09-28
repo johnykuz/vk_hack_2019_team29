@@ -8,7 +8,6 @@ import operator
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.ensemble import RandomForestClassifier
 
-from nltk.corpus import stopwords
 from string import punctuation
 
 
@@ -37,8 +36,6 @@ class Model:
         text = re.sub(r'\W+', ' ', text) # Remove special charecters
         
         text = ''.join([c for c in text if c not in self.punctuation])
-        text = ' '.join([word for word in text.split(' ') if word not in self.stopwords])
-        
         return text
 
     def predict_group(self, group, count):
