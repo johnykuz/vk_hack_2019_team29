@@ -79,7 +79,7 @@ class SQL_Manager:
             response = jsonify({'items': output})
             response.status_code = 200
             return response
-        response = jsonify({'error'})
+        response = jsonify({'error':'error'})
         response.status_code = 400
         return response
 
@@ -124,7 +124,7 @@ class SQL_Manager:
             response.status_code = 200
 
             return response
-        response = jsonify('items': [])
+        response = jsonify({'items': []})
         response.status_code = 200
         return response
 
