@@ -53,6 +53,10 @@ class SQL_Manager:
         return np.load(out)
 
     def get_category(self, user_id, category_id):
+        if category_id == 999:
+            category_id = 0
+            # category_id = classify user
+
         get_query = f'''SELECT * FROM products
                         WHERE category={category_id}
                         ORDER BY RANDOM()
@@ -60,19 +64,23 @@ class SQL_Manager:
 
         data = self.cursor.execute(get_query).fetchall()
 
-        fields = ['id', 'photo_url', 'name', 'description', 'price']
-        output = []
         if data:
-            for product in data:
-                temp = {}
+            fields = ['id', 'photo_url', 'name', 'description', 'price']
+            output = []
+            if data:
+                for product in data:
+                    temp = {}
 
-                for i in range(len(fields)):
-                    temp[fields[i]] = product[i]
+                    for i in range(len(fields)):
+                        temp[fields[i]] = product[i]
 
-                output.append(temp)
+                    output.append(temp)
 
-        response = jsonify({'items': output})
-        response.status_code = 200
+            response = jsonify({'items': output})
+            response.status_code = 200
+            return response
+        response = jsonify({'error'})
+        response.status_code = 400
         return response
 
     def get_profile(self, user_id):
@@ -105,15 +113,19 @@ class SQL_Manager:
         get_query = f'''SELECT favourite FROM users
                        WHERE id = {user_id}'''
         data = self.cursor.execute(get_query).fetchone()
+
         if data:
             output = []
             data = self.convert_array(data[0])
 
             for product in data:
                 output.append(self.get_product(int(product)))
-        response = jsonify({'items': output})
-        response.status_code = 200
+            response = jsonify({'items': output})
+            response.status_code = 200
 
+            return response
+        response = jsonify('error')
+        response.status_code = 400
         return response
 
     def manage_favourite(self, user_id, product_id, method):
@@ -159,4 +171,4 @@ class SQL_Manager:
 
         response = jsonify({'items': output})
         response.status_code = 200
-        return response
+        return respons

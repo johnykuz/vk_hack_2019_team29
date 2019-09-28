@@ -35,7 +35,6 @@ def product(product_id):
     response.status_code = 200
     return response
 
-
 @app.route('/manage_favourite/<int:user_id>/<int:product_id>/<int:method>', methods=['GET'])
 @cross_origin()
 def manage_favourite(user_id, product_id, method):
@@ -54,40 +53,19 @@ def favourite(user_id):
 def search(user_id):
     data = json.loads(request.data)
     query = data['data']
-    
+
     return sql_manager.search(query)
 
+@app.route('/user/data', methods=['POST'])
+@cross_origin()
+def search():
+    data = json.loads(request.data)
+    query = data['data']
+    user_id = query['id']
 
-
-# @app.route('/cart/<int:user_id>', methods=['GET'])
-# def cart(user_id):
-#     return sql_manager.get_user_cart(user_id)
-
-
-# @app.route('/manage_cart/<int:user_id>/<int:product_id>/<int:method>', methods=['GET'])
-# def manage_cart(user_id, product_id, method):
-#     return sql_manager.manage_cart(user_id, product_id, method)
-
-
-
-# @app.route('/user/<int:user_id>/new_data', methods=['POST'])
-# def new_data():
-#     pass
-
-
-
-
-# @app.route('/imports', methods=['POST'])
-# def import_data():
-#     print(request.data)
-#     data = json.loads(request.data)
-#     print(data)
-
-#     response = jsonify({'response':200})
-#     response.status_code = 200
-#     return response
+    return sql_manager.get_category(user_id, 999)
 
 
 if __name__ == '__main__':
     app.debug = True
-    app.run(debug=True)
+    app.run()
