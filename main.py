@@ -59,7 +59,6 @@ def search(user_id):
 @app.route('/user/data', methods=['POST'])
 def user_login():
     data = json.loads(request.data)
-    query = data['data']
     user_id = query['id']
 
     return sql_manager.get_category(user_id, 999)
