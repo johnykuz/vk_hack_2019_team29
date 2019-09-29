@@ -53,8 +53,8 @@ params = []
 data = pd.read_csv('products_final.csv')
 for row in data.iterrows():
   idx += 1
-  # print([idx, row[1][3],  row[1][1], row[1][5], row[1][4], row[1][2]])
-  params.append([idx, row[1][3],  row[1][1], row[1][5], row[1][2], row[1][4]])
+  # print([idx, row[1][3],  row[1][1], row[1][2], row[1][4], row[1][5]])
+  params.append([idx, row[1][3],  row[1][1], row[1][2], row[1][4], row[1][5]])
 print(idx)
 cursor.executemany(query, params)
 connection.commit()
