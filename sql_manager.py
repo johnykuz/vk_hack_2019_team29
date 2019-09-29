@@ -64,7 +64,7 @@ class SQL_Manager:
 
     def get_category(self, user_id, category_id):
         self.add_user(user_id)
-        if category_id > 6 or category_id < 1: category_id = random.randint(1, 7)
+        if category_id > 6 or category_id < 1: category_id = 1
         # get_cat_query = f'''SELECT category FROM users
         #                     WHERE id={user_id}'''
         # data = self.cursor.execute(get_cat_query).fetchone()
@@ -75,13 +75,11 @@ class SQL_Manager:
         #     self.cursor.executemany(f'''UPDATE users SET
         #              category=? WHERE id=?''', [[category_id, user_id]])
         #     self.connection.commit()
-        data = []
 
-        while not data:
-            get_query = f'''SELECT * FROM products
-                            WHERE category={category_id}
-                            LIMIT 20'''
-            data = self.cursor.execute(get_query).fetchall()
+        get_query = f'''SELECT * FROM products
+                        WHERE category={category_id}
+                        LIMIT 20'''
+        data = self.cursor.execute(get_query).fetchall()
         fields = ['id', 'photo_url', 'name', 'description', 'price']
         output = []
         if data:
