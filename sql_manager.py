@@ -205,5 +205,5 @@ class SQL_Manager:
 
         response = jsonify({'items': output})
         response.status_code = 200
-        return respons
+        return response
 

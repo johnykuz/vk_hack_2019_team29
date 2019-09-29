@@ -86,7 +86,7 @@ def sites():
         temp = {'photo_url': pic_links[i], 'link': links[i], 'name': names[i]}
         output.append(temp)
 
-    response = {'sites': output}
+    response = jsonify({'sites': output})
     response.status_code = 201
     return response
 
