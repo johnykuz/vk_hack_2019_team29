@@ -79,9 +79,11 @@ def user_login():
       'https://i.ibb.co/DQLwTBt/book.png', 'https://i.ibb.co/f19ZSmP/techology.png',
       'https://i.ibb.co/ZHtbvz3/game.png']
 
+    names = ['LoveRepublic', 'WildBerries', 'PetShop78', 'Sportmaster', 'Labirint', 'Citilink', 'Citilink']
+
     output = []
     for i in range(len(links)):
-        temp = {'picture': pic_links[i], 'link': links[i]}
+        temp = {'picture': pic_links[i], 'link': links[i], 'name': names[i]}
         output.append(temp)
 
     response = {'sites': output}
