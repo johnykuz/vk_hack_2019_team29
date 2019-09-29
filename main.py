@@ -69,7 +69,7 @@ def user_login():
 
 @app.route('/sites', methods=['GET'])
 @cross_origin()
-def user_login():
+def sites():
     links = ['https://loverepublic.ru/', 'https://www.wildberries.ru/', 'https://www.petshop78.ru/',
     'https://www.sportmaster.ru/', 'https://www.labirint.ru/',
      'https://www.citilink.ru/', 'https://www.citilink.ru/']
