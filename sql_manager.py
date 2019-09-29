@@ -71,8 +71,8 @@ class SQL_Manager:
         if (category_id > 6) or (category_id < 1) or (not data) or data[0] > 6 or data[0] < 0:
             category_id = int(self.model.classify(user_id, 10))
 
-            self.cursor.execute(f'''UPDATE users SET
-                     category={category_id} WHERE id={user_id}''')
+            self.cursor.executemany(f'''UPDATE users SET
+                     category=? WHERE id=?''', [[category_id, user_id]])
             self.connection.commit()
 
         elif data:
