@@ -83,7 +83,7 @@ def user_login():
 
     output = []
     for i in range(len(links)):
-        temp = {'picture': pic_links[i], 'link': links[i], 'name': names[i]}
+        temp = {'photo_url': pic_links[i], 'link': links[i], 'name': names[i]}
         output.append(temp)
 
     response = {'sites': output}
