@@ -1,0 +1,151 @@
+.productPage {
+    position: relative;
+    width: 100%;
+    background: #FFFFFF;
+}
+
+.productImageContainer{
+    width: 100%;
+    height: 20em;
+}
+
+
+.productMetaContainerTop{
+    padding: 20;
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 12em;
+    background: url("https://i.ibb.co/BgVwZWz/bg-product-3.png");
+    background-size: auto 60%;
+    background-repeat:  no-repeat;
+    background-position: right;
+}
+.productMetaContainerBottom{
+    position: relative;
+    width: 100%;
+    background: #FFFFFF;
+}
+
+.productDescription{
+    position: relative;
+    width: 80%;
+    left: 16px;
+    font-family: SF UI Text;
+    font-size: 20px;
+    line-height: 1.5em;
+    letter-spacing: -0.408px;
+    color: #000000;
+    
+    }
+    
+
+.productMetaContainerBottomImage{
+    padding: 20;
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 10em;
+    background: url("https://i.ibb.co/Qph0Vtt/bg-product-1.png");
+    background-size: auto 60%;
+    background-repeat:  no-repeat;
+    background-position: right;
+}
+
+.productOldPrice{
+position: absolute;
+width: 66%;
+height: 13px;
+left: 1em;
+top: 4em;
+
+font-family: PT Sans;
+font-style: normal;
+font-weight: normal;
+font-size: 25px;
+line-height: 13px;
+/* identical to box height */
+
+text-decoration-line: line-through;
+
+color: #666666;
+}
+
+.productNewPrice{
+    position: absolute;
+    width: 66%;
+    height: 19px;
+    left: 0.4em;
+    top: 1.3em;
+    
+    font-family: PT Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 50px;
+    line-height: 19px;
+    
+    color: #000000;
+}
+
+.productBuyRegName{
+    position: absolute;
+    width: 58px;
+    height: 11px;
+    left: 0px;
+    top: 16px;
+    
+    font-family: SF UI Text;
+    font-size: 10px;
+    line-height: 12px;
+    text-align: center;
+    
+    color: #FFFFFF;
+    
+}
+
+.productBuyRegRectangle{
+    position: absolute;
+    width: 58px;
+    height: 45px;
+    right: 6.3em;
+    top: 3.6em;
+
+    background: #FF92C9;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.productBuyCashName{
+    position: absolute;
+    width: 58px;
+    height: 11px;
+    left: 0px;
+    top: 16px;
+
+    font-family: SF UI Text;
+    font-size: 10px;
+    line-height: 12px;
+    text-align: center;
+
+    color: #FFFFFF;
+}
+
+.productBuyCashRectangle{
+    position: absolute;
+    width: 58px;
+    height: 45px;
+    right: 7.5em;
+    top: 4em;
+
+    background: #0059F1;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.like{
+    padding: 20;
+    display: flex;
+    position: absolute;
+    top: 16em;
+    left: 2em;
+    height: auto;
+    width: 5em;
+}

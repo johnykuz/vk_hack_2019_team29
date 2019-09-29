@@ -1,0 +1,126 @@
+.productCardImage {
+    display: inline-block;
+    vertical-align: top;
+    width: 30%;
+    padding: 10px;
+  
+  }
+
+.itemStyle{
+    flex-shrink: 0;
+    width: 60;
+    height: 120;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    float: left;
+    font-size: 12;
+    margin-left: 10;
+    margin-right: 10;
+
+}
+
+ .products {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 10px;
+  
+}
+
+.product {
+    position: relative;
+    width: 100%;
+    height: 6em;
+    display: flex;
+    /**/
+  }
+  
+  .productName {
+    position: absolute;
+    width: 100%;
+    height: 16px;
+    left: 92px;
+    top: 14px;
+    
+    font-family: PT Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 16px;
+    /* identical to box height */
+    
+    text-align: left;
+    
+    color: #000000;
+    
+  
+  }
+  
+  .productCostOriginal {
+    position: absolute;
+    width: 53px;
+    height: 13px;
+    left: 92px;
+    top: 54px;
+
+    font-family: "PT Sans";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 13px;
+    /* identical to box height */
+
+    text-align: left;
+
+    color: #666666;
+  }
+
+  .productCostNew{
+    position: absolute;
+    width: 61px;
+    height: 16px;
+    left: 92px;
+    top: 34px;
+    
+    font-family: "PT Sans";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    line-height: 16px;
+    /* identical to box height */
+    
+
+    color: #000000;
+
+  }
+  .productDiscount {
+    position: absolute;
+    width: 30px;
+    height: 16px;
+    right: 0px;
+    top: 17px;
+    
+    font-family: "PT Sans";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    line-height: 16px;
+    /* identical to box height */
+    
+    text-align: right;
+    
+    color: #000000;
+  }
+  
+  .bg {
+    position: absolute;
+    
+    left: 0%;
+    right: 0%;
+    top: 0%;
+    bottom: 0%;
+    background: url("https://i.ibb.co/k5LFdSf/bgCard.png");
+    background-size: auto 75%;
+    background-repeat: no-repeat;
+    background-position: right;
+}
