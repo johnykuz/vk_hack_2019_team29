@@ -68,8 +68,8 @@ class SQL_Manager:
                             WHERE id={user_id}'''
         data = self.cursor.execute(get_cat_query).fetchone()
 
-        if (category_id > 6) or (category_id < 1) or (not data) or data[0] > 6 or data[0] < 0:
-            category_id = int(self.model.classify(user_id, 10))
+        if ((category_id > 6) or (category_id < 1)) and ((not data) or (data[0] > 6) or (data[0] < 0)):
+            category_id = self.model.classify(user_id, 10)
 
             self.cursor.executemany(f'''UPDATE users SET
                      category=? WHERE id=?''', [[category_id, user_id]])
