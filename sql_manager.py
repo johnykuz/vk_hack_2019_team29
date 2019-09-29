@@ -2,6 +2,7 @@ import json
 import io
 import sqlite3
 import numpy as np
+import random
 from collections import defaultdict
 
 from flask import jsonify
@@ -63,17 +64,17 @@ class SQL_Manager:
 
     def get_category(self, user_id, category_id):
         self.add_user(user_id)
+        if category_id > 6 or category_id < 1: category_id = random.randint(1, 7)
+        # get_cat_query = f'''SELECT category FROM users
+        #                     WHERE id={user_id}'''
+        # data = self.cursor.execute(get_cat_query).fetchone()
 
-        get_cat_query = f'''SELECT category FROM users
-                            WHERE id={user_id}'''
-        data = self.cursor.execute(get_cat_query).fetchone()
+        # if data[0] == -1 or (category_id > 6) or (category_id < 1):
+        #     category_id = self.model.classify(user_id, 10)
 
-        if data[0] == -1 or (category_id > 6) or (category_id < 1):
-            category_id = self.model.classify(user_id, 10)
-
-            self.cursor.executemany(f'''UPDATE users SET
-                     category=? WHERE id=?''', [[category_id, user_id]])
-            self.connection.commit()
+        #     self.cursor.executemany(f'''UPDATE users SET
+        #              category=? WHERE id=?''', [[category_id, user_id]])
+        #     self.connection.commit()
 
 
         get_query = f'''SELECT * FROM products
@@ -82,7 +83,7 @@ class SQL_Manager:
                         LIMIT 20'''
 
         data = self.cursor.execute(get_query).fetchall()
-
+        print(data)
         fields = ['id', 'photo_url', 'name', 'description', 'price']
         output = []
         if data:
