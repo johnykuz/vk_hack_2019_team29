@@ -67,5 +67,26 @@ def user_login():
     return sql_manager.get_category(user_id, 999)
 
 
+@app.route('/sites', methods=['GET'])
+@cross_origin()
+def user_login():
+    links = ['https://loverepublic.ru/', 'https://www.wildberries.ru/', 'https://www.petshop78.ru/',
+    'https://www.sportmaster.ru/', 'https://www.labirint.ru/',
+     'https://www.citilink.ru/', 'https://www.citilink.ru/']
+
+    pic_links = ['https://i.ibb.co/p3bKDzw/clothes.png', 'https://i.ibb.co/p3bKDzw/clothes.png',
+     'https://i.ibb.co/YtwpvpH/sport.png', 'https://i.ibb.co/GHxHJb2/pets.png',
+      'https://i.ibb.co/DQLwTBt/book.png', 'https://i.ibb.co/f19ZSmP/techology.png',
+      'https://i.ibb.co/ZHtbvz3/game.png']
+
+    output = []
+    for i in range(len(links)):
+        temp = {'picture': pic_links[i], 'link': links[i]}
+        output.append(temp)
+
+    response = {'sites': output}
+    response.status_code = 201
+    return response
+
 if __name__ == '__main__':
     app.run()

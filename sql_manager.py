@@ -88,7 +88,6 @@ class SQL_Manager:
         fields = ['id', 'photo_url', 'name', 'description', 'price']
         output = []
         if data:
-            print(data)
             for product in data:
                 temp = {}
 
@@ -207,3 +206,4 @@ class SQL_Manager:
         response = jsonify({'items': output})
         response.status_code = 200
         return respons
+
