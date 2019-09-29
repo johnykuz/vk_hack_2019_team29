@@ -83,7 +83,6 @@ class SQL_Manager:
                         LIMIT 20'''
 
         data = self.cursor.execute(get_query).fetchall()
-        print(data)
         fields = ['id', 'photo_url', 'name', 'description', 'price']
         output = []
         if data:
