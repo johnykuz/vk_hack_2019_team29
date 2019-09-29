@@ -75,14 +75,13 @@ class SQL_Manager:
         #     self.cursor.executemany(f'''UPDATE users SET
         #              category=? WHERE id=?''', [[category_id, user_id]])
         #     self.connection.commit()
+        data = []
 
-
-        get_query = f'''SELECT * FROM products
-                        WHERE category={category_id}
-                        ORDER BY RANDOM()
-                        LIMIT 20'''
-
-        data = self.cursor.execute(get_query).fetchall()
+        while not data:
+            get_query = f'''SELECT * FROM products
+                            WHERE category={category_id}
+                            LIMIT 20'''
+            data = self.cursor.execute(get_query).fetchall()
         fields = ['id', 'photo_url', 'name', 'description', 'price']
         output = []
         if data:
