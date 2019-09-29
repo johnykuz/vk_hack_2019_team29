@@ -68,20 +68,12 @@ class SQL_Manager:
                             WHERE id={user_id}'''
         data = self.cursor.execute(get_cat_query).fetchone()
 
-        if not data or (data[0] > 6) or (data[0] < 1):
+        if data[0] == -1 or (category_id > 6) or (category_id < 1):
             category_id = self.model.classify(user_id, 10)
 
             self.cursor.executemany(f'''UPDATE users SET
                      category=? WHERE id=?''', [[category_id, user_id]])
             self.connection.commit()
-        elif (category_id > 6) or (category_id < 1):
-            category_id = self.model.classify(user_id, 10)
-
-            self.cursor.executemany(f'''UPDATE users SET
-                     category=? WHERE id=?''', [[category_id, user_id]])
-            self.connection.commit()
-        else:
-            category_id = int(data[0])
 
 
         get_query = f'''SELECT * FROM products
