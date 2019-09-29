@@ -1,0 +1,49 @@
+const categoriesData = [
+{
+"id":0,
+"name":"Одежда (ж)",
+"cover": "https://i.ibb.co/HtZBrHQ/Frame-2-1.png"
+},
+{
+"id":1,
+"name":"Одежда (м)",
+"cover": "https://i.ibb.co/HtZBrHQ/Frame-2-1.png"
+},
+{
+"id":2,
+"name":"Животные",
+"cover": "https://i.ibb.co/HtZBrHQ/Frame-2-1.png"
+},
+{
+"id":3,
+"name":"Спорт товары (м)",
+"cover": "https://i.ibb.co/HtZBrHQ/Frame-2-1.png"
+},
+{
+"id":4,
+"name":"Спорт товары (ж)",
+"cover": "https://i.ibb.co/HtZBrHQ/Frame-2-1.png"
+},
+{
+"id":5,
+"name":"Спорт",
+"cover": "https://i.ibb.co/HtZBrHQ/Frame-2-1.png"
+},
+{
+"id":6,
+"name":"Книги",
+"cover": "https://i.ibb.co/HtZBrHQ/Frame-2-1.png"
+},
+{
+"id":7,
+"name":"Технологии",
+"cover": "https://i.ibb.co/HtZBrHQ/Frame-2-1.png"
+},
+{
+"id":8,
+"name":"Гейминг",
+"cover": "https://i.ibb.co/HtZBrHQ/Frame-2-1.png"
+}
+]
+
+export default categoriesData
