@@ -67,7 +67,6 @@ class Model:
                 ans = self.predict_group(groups[group], count)
                 if ans != None:
                     cat[ans] += 1
-            print(cat)
             return max(cat.items(), key=operator.itemgetter(1))[0]
         except:
             return 3

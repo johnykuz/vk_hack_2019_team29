@@ -34,9 +34,10 @@ products_create_query = '''CREATE TABLE IF NOT EXISTS products
 users_create_query = '''CREATE TABLE IF NOT EXISTS users
                         (id INTEGER,
                          picture_url TEXT,
-                         cash_back INT,
-                         user_of_psb INT,
-                         favourite array
+                         cash_back INTEGER,
+                         user_of_psb INTEGER,
+                         favourite array,
+                          category INTEGER
                          )'''
 
 cursor.execute(products_create_query)
@@ -52,14 +53,16 @@ params = []
 data = pd.read_csv('products_final.csv')
 for row in data.iterrows():
   idx += 1
-  params.append([idx, row[1][3],  row[1][1], row[1][2], row[1][4], row[1][5]])
+  print(int(row[1][1]))
+  # print([idx, row[1][3],  row[1][1], row[1][5], row[1][4], row[1][2]])
+  params.append([idx, row[1][3],  row[1][5], row[1][2], row[1][4], int(row[1][1])])
 print(idx)
 cursor.executemany(query, params)
 connection.commit()
 
 cart = np.array([1, 11, 21, 45, 12, 90, 32, 89])
-insert_user = '''INSERT INTO users VALUES (?,?,?,?,?)'''
-params = [0, 'https://images-na.ssl-images-amazon.com/images/I/8166xCVDGnL._SY355_.jpg', 100, 0, cart]
+insert_user = '''INSERT INTO users VALUES (?,?,?,?,?,?)'''
+params = [0, 'https://images-na.ssl-images-amazon.com/images/I/8166xCVDGnL._SY355_.jpg', 100, 0, cart,-1]
 
 cursor.executemany(insert_user, [params])
 connection.commit()

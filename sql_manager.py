@@ -30,9 +30,10 @@ class SQL_Manager:
         users_create_query = '''CREATE TABLE IF NOT EXISTS users
                               (id INTEGER,
                                picture_url TEXT,
-                               cash_back INT,
-                               user_of_psb INT,
-                               favourite array
+                               cash_back INTEGER,
+                               user_of_psb INTEGER,
+                               favourite array,
+                               category INTEGER
                                )'''
 
         self.cursor.execute(products_create_query)
@@ -52,10 +53,30 @@ class SQL_Manager:
         out.seek(0)
         return np.load(out)
 
-    def get_category(self, user_id, category_id):
-        if category_id > 6 or category_id < 1:
-            category_id = self.model.classify(user_id, 5)
+    def add_user(self, user_id):
+        test_query = f'''SELECT * FROM users WHERE id={user_id}'''
 
+        if not self.cursor.execute(test_query).fetchone():
+            new_user_q = '''INSERT INTO users VALUES(?,?,?,?,?,?)'''
+            self.cursor.executemany(new_user_q, [[user_id, '', 0, 0,np.array([]), -1]])
+        self.connection.commit()
+
+    def get_category(self, user_id, category_id):
+        self.add_user(user_id)
+
+        get_cat_query = f'''SELECT category FROM users
+                            WHERE id={user_id}'''
+        data = self.cursor.execute(get_cat_query).fetchone()
+
+        if (category_id > 6) or (category_id < 1) or (not data) or data[0] > 6 or data[0] < 0:
+            category_id = int(self.model.classify(user_id, 10))
+
+            self.cursor.execute(f'''UPDATE users SET
+                     category={category_id} WHERE id={user_id}''')
+            self.connection.commit()
+
+        elif data:
+            category_id = int(data[0])
 
         get_query = f'''SELECT * FROM products
                         WHERE category={category_id}
@@ -64,24 +85,24 @@ class SQL_Manager:
 
         data = self.cursor.execute(get_query).fetchall()
 
+        fields = ['id', 'photo_url', 'name', 'description', 'price']
+        output = []
         if data:
-            fields = ['id', 'photo_url', 'name', 'description', 'price']
-            output = []
-            if data:
-                for product in data:
-                    temp = {}
+            print(data)
+            for product in data:
+                temp = {}
 
-                    for i in range(len(fields)):
-                        temp[fields[i]] = product[i]
+                for i in range(len(fields)):
+                    temp[fields[i]] = product[i]
 
-                    output.append(temp)
-
+                output.append(temp)
             response = jsonify({'items': output})
             response.status_code = 200
             return response
         response = jsonify({'error':'error'})
         response.status_code = 400
         return response
+
 
     def get_profile(self, user_id):
         get_query = f'''SELECT * FROM users
@@ -153,13 +174,15 @@ class SQL_Manager:
             else:
                 if product_id not in data:
                     data.append(product_id)
-            data = np.array(data)
+        else:
+            self.add_user(user_id)
+            if method == 1:
+                data = [product_id]
+        data = np.array(data)
 
-
-            insert_query = f'''UPDATE users SET favourite=? WHERE id=?'''
-
-            self.cursor.executemany(insert_query, [[data, user_id]])
-            self.connection.commit()
+        insert_query = '''UPDATE users SET favourite=? WHERE id=?'''
+        self.cursor.executemany(insert_query, [[data, user_id]])
+        self.connection.commit()
 
     def search(self, string):
         string = string.lower()
